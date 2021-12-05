@@ -7,8 +7,8 @@ def to_board(x):
     return board
 
 with open('inputs/day-4.txt', 'r') as file:
-    boards_list = file.read().split('\n\n')
-    boards_list = list(map(to_board, boards_list))
+    data = file.read().split('\n\n')
+    data = list(map(to_board, data))
 
 def check_bingo(board):
     for row in range(len(board)):
@@ -21,7 +21,7 @@ def check_bingo(board):
 
 # # Part one
 def get_winner():
-    boards = [[[x for x in y] for y in z] for z in boards_list]
+    boards = [[[x for x in y] for y in z] for z in data]
     for number in bingo_numbers:
         for b in range(len(boards)):
             for r in range(len(boards[b])):
@@ -45,7 +45,7 @@ print(unmarked * bingo)
 
 # Part two
 def get_last_winner():
-    boards = [[[x for x in y] for y in z] for z in boards_list]
+    boards = [[[x for x in y] for y in z] for z in data]
     for number in bingo_numbers:
         for b in range(len(boards)):
             if boards[b] == None:

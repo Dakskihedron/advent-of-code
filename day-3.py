@@ -1,5 +1,5 @@
 with open('inputs/day-3.txt') as file:
-    report = file.read().split('\n')
+    data = file.read().split('\n')
 
 # Part one
 gamma = ''
@@ -8,7 +8,7 @@ for bit in range(12):
     zeroes = 0
     ones = 0
 
-    for number in report:
+    for number in data:
         if number[bit] == '0':
             zeroes += 1
         else:
@@ -24,8 +24,8 @@ for bit in range(12):
 print(int(gamma, 2) * int(epsilon, 2))
 
 # Part two
-oxygen = [i for i in report]
-co2 = [i for i in report]
+oxygen = [i for i in data]
+co2 = [i for i in data]
 
 for bit in range(12):
     zeroes = 0
@@ -78,7 +78,5 @@ for bit in range(12):
 
     if len(co2) == 1:
         break
-
-print(oxygen, co2)
 
 print(int(oxygen[0], 2) * int(co2[0], 2))

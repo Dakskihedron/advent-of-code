@@ -1,12 +1,12 @@
 with open('inputs/day-2.txt') as file:
-    instructions = file.read().split('\n')
-    for i in range(len(instructions)):
-        instructions[i] = instructions[i].split()
+    data = file.read().split('\n')
+    for i in range(len(data)):
+        data[i] = data[i].split()
 
 # Part one
 h_pos = 0
 depth = 0
-for step in instructions:
+for step in data:
     if step[0] == 'forward':
         h_pos += int(step[1])
     elif step[0] == 'down':
@@ -19,7 +19,7 @@ print(h_pos * depth)
 h_pos = 0
 depth = 0
 aim = 0
-for step in instructions:
+for step in data:
     if step[0] == 'forward':
         h_pos += int(step[1])
         depth += aim * int(step[1])
