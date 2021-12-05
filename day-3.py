@@ -79,4 +79,6 @@ for bit in range(12):
     if len(co2) == 1:
         break
 
+print(oxygen, co2)
+
 print(int(oxygen[0], 2) * int(co2[0], 2))
