@@ -13,7 +13,7 @@ for _ in range(int(days)):
             fish[i] -= 1
 print(f"After {days} days: {len(fish)}")
 
-# Part two (and technically part 1 but better)
+# Part two (and technically part one but better)
 days = input('Number of days: ')
 fish = [data.count(x) for x in range(9)]
 for _ in range(int(days)):
