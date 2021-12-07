@@ -15,7 +15,7 @@ usage_list = []
 for i in range(len(data)):
     fuel_usage = 0
     for number in [x for x in data if x != i]:
-        diff = abs(number - i)
-        fuel_usage += int((diff ** 2 + diff) / 2)
+        calc_fuel = lambda x: int((x ** 2 + x) / 2)
+        fuel_usage += calc_fuel(abs(number - i))
     usage_list.append(fuel_usage)
 print(min(usage_list))
