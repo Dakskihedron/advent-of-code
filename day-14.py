@@ -1,38 +1,28 @@
 with open('inputs/day-14.txt') as file:
     template, pairs = file.read().split('\n\n')
-    pairs = pairs.split('\n')
-    rules = {}
-    for pair in pairs:
-        rule, element = pair.strip().split(' -> ')
-        rules[rule] = element
+    pairs = [pair.split(' -> ') for pair in pairs.split('\n')]
+    rules = {x: y for x, y in pairs}
+
 
 # Part one
-polymer = template
 steps = 10
+polymer = template
 while steps != 0:
-    elements = []
-    for i in range(len(polymer) - 1):
-        elements.append((rules[polymer[i] + polymer[i+1]], i+1))
+    elements = [(rules[polymer[i] + polymer[i+1]], i+1) for i in range(len(polymer) - 1)]
     new_polymer = [x for x in polymer]
-    for e, i in elements[::-1]:
-        new_polymer.insert(i, e)
+    for x, y in elements[::-1]:
+        new_polymer.insert(y, x)
     polymer = ''.join(new_polymer)
     steps -= 1
 
-e_list = []
-for e in rules.values():
-    if e not in e_list:
-        e_list.append(e)
-e_count = [polymer.count(e) for e in e_list]
-print(max(e_count) - min(e_count))
+elements_count = [polymer.count(x) for x in set([x for x in rules.values()])]
+print(max(elements_count) - min(elements_count))
+
 
 # Part two (and technically improved part one)
 steps = 40
 
-elements_count = {}
-for e in rules.values():
-    if e not in elements_count:
-        elements_count[e] = 0
+elements_count = {i: 0 for i in set(rules.values())}
 for i in template:
     elements_count[i] += 1
 
@@ -44,10 +34,10 @@ while steps != 0:
     new_dict = {i: 0 for i in rules.keys()}
     for rule, count in rules_count.items():
         if count > 0:
-            e = rules[rule]
-            new_dict[rule[0] + e] += count
-            new_dict[e + rule[1]] += count
-            elements_count[e] += count
+            x = rules[rule]
+            new_dict[rule[0] + x] += count
+            new_dict[x + rule[1]] += count
+            elements_count[x] += count
     rules_count = new_dict
     steps -= 1
 
