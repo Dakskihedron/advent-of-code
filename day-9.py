@@ -1,7 +1,6 @@
 with open('inputs/day-9.txt') as file:
     data = file.read().split('\n')
-    for i in range(len(data)):
-        data[i] = [int(x) for x in data[i]]
+    data = [list(map(int, x)) for x in data]
 
 # Part one
 def is_smaller(val, val_list):

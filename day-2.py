@@ -1,7 +1,6 @@
 with open('inputs/day-2.txt') as file:
     data = file.read().split('\n')
-    for i in range(len(data)):
-        data[i] = data[i].split()
+    data = [x.split() for x in data]
 
 # Part one
 h_pos = 0
