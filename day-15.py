@@ -56,4 +56,26 @@ print(dijkstra((0, 0), (len(data) - 1, len(data[0]) - 1), data))
 
 
 # Part two
-data
+wrap = lambda n: (n % 9) + 1
+data_5x = [[list(i) for i in data]]
+data_5x_v2 = []
+
+for _ in range(4):
+    new_list = [list(map(wrap, i)) for i in data_5x[-1]]
+    data_5x.append(new_list)
+for i in range(len(data_5x)):
+    for j in range(len(data_5x[i])):
+        data_5x_v2.append(data_5x[i][j])
+
+for row in range(len(data_5x_v2)):
+    new_row = [list(i for i in data_5x_v2[row])]
+    for _ in range(4):
+        x = list(map(wrap, new_row[-1]))
+        new_row.append(x)
+    flatten = []
+    for x in new_row:
+        for y in x:
+            flatten.append(y)
+    data_5x_v2[row] = flatten
+
+print(dijkstra((0, 0), (len(data_5x_v2) - 1, len(data_5x_v2[0]) - 1), data_5x_v2))
