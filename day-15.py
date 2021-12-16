@@ -6,7 +6,6 @@ with open('inputs/day-15.txt') as file:
 
 
 # Part one
-
 def get_adj(y, x, graph):
     adj = []
     if y > 0:
@@ -37,12 +36,12 @@ def dijkstra(source, target, graph):
         u = heapq.heappop(pq)[1]
 
         if u == target:
-            risk = [graph[target[0]][target[1]]]
+            risk = []
             u = target
             while u != source:
                 risk.append(graph[u[0]][u[1]])
                 u = prev[u]
-            return sum(risk) - 1
+            return sum(risk)
 
         for v in get_adj(u[0], u[1], graph):
             alt = dist[u] + graph[v[0]][v[1]]
