@@ -27,10 +27,7 @@ print(score)
 score = 0
 for r in rounds:
     if r[1] == 'X':
-        result = scoring[r[0]] - 1
-        if result == 0:
-            result = 3
-        score += result
+        score += ((scoring[r[0]] - 2) % 3) + 1
     elif r[1] == 'Y':
         score += (3 + scoring[r[0]])
     else:
