@@ -3,7 +3,7 @@ with open('inputs/day-5.txt', 'r') as file:
     data = data.split('\n')
 
 # Part one
-stacks_original = [
+stacks = [
     "WTHPJCF",
     "HBJZFVRG",
     "RTPH",
@@ -15,25 +15,19 @@ stacks_original = [
     "MFSZD"
 ]
 
-stacks = [x for x in stacks_original]
+def move_crates(stacks, data, multi=False):
+    new_stacks = [x for x in stacks]
+    for line in data:
+        move = line.split(' ')
+        num, start, end = int(move[1]), int(move[3]), int(move[5])
+        crates = new_stacks[start-1][0:num]
+        if not multi:
+            crates = crates[::-1]
+        new_stacks[start-1] = new_stacks[start-1][num:]
+        new_stacks[end-1] = crates + new_stacks[end-1]
+    return ''.join([x[0] for x in new_stacks])
 
-for line in data:
-    move = line.split(' ')
-    num, start, end = int(move[1]), int(move[3]), int(move[5])
-    crates = stacks[start-1][0:num][::-1]
-    stacks[start-1] = stacks[start-1][num:]
-    stacks[end-1] = crates + stacks[end-1]
-
-print(''.join([x[0] for x in stacks]))
+print(move_crates(stacks, data))
 
 # Part two
-stacks = [x for x in stacks_original]
-
-for line in data:
-    move = line.split(' ')
-    num, start, end = int(move[1]), int(move[3]), int(move[5])
-    crates = stacks[start-1][0:num]
-    stacks[start-1] = stacks[start-1][num:]
-    stacks[end-1] = crates + stacks[end-1]
-
-print(''.join([x[0] for x in stacks]))
+print(move_crates(stacks, data, True))
