@@ -2,6 +2,7 @@ with open('inputs/day-8.txt', 'r') as file:
     data = file.read().strip().split('\n')
     data = [[int(y) for y in x] for x in data]
 
+
 # Part one
 def check_less(val, val_list):
     for n in val_list:
@@ -35,14 +36,13 @@ for y in range(0, len(data)):
 
 print(count)
 
+
 # Part two
-def get_visible(val, val_list):
+def get_vis(val, val_list):
     vis_list = []
     for n in val_list:
-        if n < val:
-            vis_list.append(n)
-        elif n >= val:
-            vis_list.append(n)
+        vis_list.append(n)
+        if n >= val:
             break
     return len(vis_list)
 
@@ -50,25 +50,10 @@ score = 0
 for y in range(0, len(data)):
     for x in range(0, len(data[y])):
 
-        if x > 0:
-            trees_left = get_visible(data[y][x], [data[y][n] for n in range(0, x)][::-1])
-        else:
-            trees_left = 1
-
-        if x < len(data[y]) - 1:
-            trees_right = get_visible(data[y][x], [data[y][n] for n in range(x+1, len(data[x]))])
-        else:
-            trees_right = 1
-
-        if y > 0:
-            trees_up = get_visible(data[y][x], [data[n][x] for n in range(0, y)][::-1])
-        else:
-            trees_up = 1
-
-        if y < len(data) - 1:
-            trees_down = get_visible(data[y][x], [data[n][x] for n in range(y+1, len(data))])
-        else:
-            trees_down = 1
+        trees_left = get_vis(data[y][x], [data[y][n] for n in range(0, x)][::-1]) if x > 0 else 1
+        trees_right = get_vis(data[y][x], [data[y][n] for n in range(x+1, len(data[x]))]) if x < len(data[y]) - 1 else 1
+        trees_up = get_vis(data[y][x], [data[n][x] for n in range(0, y)][::-1]) if y > 0 else 1
+        trees_down = get_vis(data[y][x], [data[n][x] for n in range(y+1, len(data))]) if y < len(data) - 1 else 1
 
         scenic_score = trees_left * trees_right * trees_up * trees_down
         if scenic_score > score:
