@@ -4,7 +4,7 @@ def add(elf):
     return sum(elf)
 
 with open('inputs/day-1.txt', 'r') as file:
-    elves = list(map(add, file.read().split('\n\n')))
+    elves = list(map(add, file.read().strip().split('\n\n')))
     print(max(elves))
 
 # Part two

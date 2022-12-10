@@ -1,5 +1,5 @@
 with open('inputs/day-2.txt', 'r') as file:
-    data = file.read().split('\n')
+    data = file.read().strip().split('\n')
     rounds = [x.strip().split(' ') for x in data]
 
 # Part 1
