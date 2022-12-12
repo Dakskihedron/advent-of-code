@@ -29,7 +29,7 @@ class Graph:
         return str(self.__vertices)
 
 
-def dijkstra(graph: Graph, src):
+def dijkstra(graph: Graph, src, dest):
     dist = {}
     pq = []
 
@@ -92,7 +92,7 @@ for v in graph.vertices():
         if data[v[0]][v[1]] != 'z':
             graph.remove(v, dest)
 
-print(dijkstra(graph, src))
+print(dijkstra(graph, src, dest))
 
 
 # Part two
@@ -105,5 +105,5 @@ for y in range(len(data)):
 
 distances = []
 for src in a_coords:
-    distances.append(dijkstra(graph, src))
+    distances.append(dijkstra(graph, src, dest))
 print(min(distances))
