@@ -2,6 +2,7 @@ with open('inputs/day-5.txt', 'r') as file:
     stacks, data = file.read().strip().split('\n\n')
     data = data.split('\n')
 
+
 # Part one
 stacks = [
     "WTHPJCF",
@@ -27,7 +28,8 @@ def move_crates(stacks, data, multi=False):
         new_stacks[end-1] = crates + new_stacks[end-1]
     return ''.join([x[0] for x in new_stacks])
 
-print(move_crates(stacks, data))
+print('Part 1:', move_crates(stacks, data))
+
 
 # Part two
-print(move_crates(stacks, data, True))
+print('Part 2:', move_crates(stacks, data, True))

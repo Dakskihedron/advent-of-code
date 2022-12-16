@@ -92,7 +92,7 @@ for v in graph.vertices():
         if data[v[0]][v[1]] != 'z':
             graph.remove(v, dest)
 
-print(dijkstra(graph, src, dest))
+print('Part 1:', dijkstra(graph, src, dest))
 
 
 # Part two
@@ -106,4 +106,4 @@ for y in range(len(data)):
 distances = []
 for src in a_coords:
     distances.append(dijkstra(graph, src, dest))
-print(min(distances))
+print('Part 2:', min(distances))

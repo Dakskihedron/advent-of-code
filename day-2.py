@@ -2,6 +2,7 @@ with open('inputs/day-2.txt', 'r') as file:
     data = file.read().strip().split('\n')
     rounds = [x.strip().split(' ') for x in data]
 
+
 # Part 1
 scoring = {
     'A': 1,
@@ -21,7 +22,8 @@ for r in rounds:
         score += (6 + scoring[r[1]])
     else:
         score += scoring[r[1]]
-print(score)
+print('Part 1:', score)
+
 
 # Part two
 score = 0
@@ -32,4 +34,4 @@ for r in rounds:
         score += (3 + scoring[r[0]])
     else:
         score += (6 + (scoring[r[0]] % 3) + 1)
-print(score)
+print('Part 2:', score)

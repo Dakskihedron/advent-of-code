@@ -46,7 +46,7 @@ for p in range(len(packets)):
     left, right = packets[p][0], packets[p][1]
     if compare(left, right):
         ordered_sum += (p + 1)
-print(ordered_sum)
+print('Part 1:', ordered_sum)
 
 
 # Part two
@@ -62,4 +62,4 @@ for packet in packets:
     if compare(packet, [[6]]):
         divider2_before += 1
 
-print(divider1_before * divider2_before)
+print('Part 2:', divider1_before * divider2_before)

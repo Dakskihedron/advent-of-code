@@ -5,8 +5,9 @@ def add(elf):
 
 with open('inputs/day-1.txt', 'r') as file:
     elves = list(map(add, file.read().strip().split('\n\n')))
-    print(max(elves))
+    print('Part 1:', max(elves))
+
 
 # Part two
 elves.sort()
-print(sum(elves[-3:]))
+print('Part 2:', sum(elves[-3:]))

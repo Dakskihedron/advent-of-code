@@ -1,6 +1,7 @@
 with open('inputs/day-7.txt', 'r') as file:
     data = file.read().strip().split('\n')
 
+
 # Part one
 dir_dict = {}
 dir_list = []
@@ -21,8 +22,9 @@ for line in data:
             else:
                 dir_dict[path] = int(output[0])
 
-print(sum([x for x in dir_dict.values() if x <= 100000]))
+print('Part 1:', sum([x for x in dir_dict.values() if x <= 100000]))
+
 
 # Part two
 curr_unused = 70000000 - dir_dict['/']
-print(min([x for x in dir_dict.values() if (curr_unused + x) >= 30000000]))
+print('Part 2:', min([x for x in dir_dict.values() if (curr_unused + x) >= 30000000]))

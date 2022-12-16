@@ -4,6 +4,7 @@ with open('inputs/day-11.txt', 'r') as file:
     data = file.read().strip().split('\n\n')
     data = [x.split('\n') for x in data]
 
+
 # Part one
 def calculate_monkey_biz(rounds, reduce_worry, data):
     inspected = {}
@@ -41,8 +42,8 @@ def calculate_monkey_biz(rounds, reduce_worry, data):
     sorted_inspected = sorted(list(inspected.values()))
     return (sorted_inspected[-1] * sorted_inspected[-2])
 
-print(calculate_monkey_biz(20, False, data))
+print('Part 1:', calculate_monkey_biz(20, False, data))
 
 
 # Part two
-print(calculate_monkey_biz(10000, True, data))
+print('Part 2:', calculate_monkey_biz(10000, True, data))

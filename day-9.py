@@ -2,6 +2,7 @@ with open('inputs/day-9.txt', 'r') as file:
     data = file.read().strip().split('\n')
     data = [x.split(' ') for x in data]
 
+
 # Part one
 def count_traversed(knots_coords, data):
     tail_coords = set()
@@ -43,8 +44,8 @@ def count_traversed(knots_coords, data):
 
     return len(tail_coords)
 
-print(count_traversed([[0,0], [0,0]], data))
+print('Part 1:', count_traversed([[0,0], [0,0]], data))
 
 
 # Part 2
-print(count_traversed([[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]], data))
+print('Part 2:', count_traversed([[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]], data))

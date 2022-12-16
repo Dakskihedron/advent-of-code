@@ -2,6 +2,7 @@ with open('inputs/day-10.txt', 'r') as file:
     data = file.read().strip().split('\n')
     data = [x.split(' ') for x in data]
 
+
 # Part one
 signal_sum, cycle, x = 0, 0, 1
 cycles = [20, 60, 100, 140, 180, 220]
@@ -18,7 +19,7 @@ for i in data:
                 signal_sum += cycle * x
         x += int(i[1])
 
-print(signal_sum)
+print('Part 1:', signal_sum)
 
 
 # Part two
@@ -48,5 +49,6 @@ for i in data:
 
         x += int(i[1])
 
+print('Part 2:')
 for row in crt:
     print(''.join(row))

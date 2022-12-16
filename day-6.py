@@ -1,6 +1,7 @@
 with open('inputs/day-6.txt', 'r') as file:
     data = file.read().strip()
 
+
 # Part one
 def calculate_char(data, packet_length):
     chars = packet_length
@@ -10,7 +11,8 @@ def calculate_char(data, packet_length):
             return chars
         chars += 1
         
-print(calculate_char(data, 4))
+print('Part 1:', calculate_char(data, 4))
+
 
 # Part two
-print(calculate_char(data, 14))
+print('Part 2:', calculate_char(data, 14))

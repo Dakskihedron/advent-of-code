@@ -34,7 +34,7 @@ for y in range(0, len(data)):
                 count += 1
                 break
 
-print(count)
+print('Part 1:', count)
 
 
 # Part two
@@ -59,4 +59,4 @@ for y in range(0, len(data)):
         if scenic_score > score:
             score = scenic_score
 
-print(score)
+print('Part 2:', score)

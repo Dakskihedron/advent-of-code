@@ -74,9 +74,9 @@ def simulate_sand(world, height, floor=False):
 
 
 part1_world = copy.deepcopy(world)
-print(simulate_sand(part1_world, height))
+print('Part 1:', simulate_sand(part1_world, height))
 
 
 # Part 2
 part2_world = copy.deepcopy(world)
-print(simulate_sand(part2_world, height, True))
+print('Part 2:', simulate_sand(part2_world, height, True))
