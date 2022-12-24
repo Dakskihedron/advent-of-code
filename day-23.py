@@ -36,7 +36,6 @@ def sim_planting(world, elf_count, rounds, get_rounds=False):
                 continue
 
             for d in compass:
-
                 if d == 0 and world.get((x,y-1), None) == None and world.get((x-1,y-1), None) == None and world.get((x+1,y-1), None) == None:
                     world_new[(x,y-1)].append((elf, pos))
                     break
