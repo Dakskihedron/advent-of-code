@@ -6,10 +6,10 @@ def sum_calibration1(data):
     numbers = r"(\W*(1|2|3|4|5|6|7|8|9)\W*)"
     for line in data:
         sum += int(re.search(numbers, line).group(1) + re.search(numbers, line[::-1]).group(1))
-    print(sum)
+    print('Part one:', sum)
 
 
-# Part 2
+# Part two
 def sum_calibration2(data):
     sum = 0
     words = r"(\W*(1|2|3|4|5|6|7|8|9|one|two|three|four|five|six|seven|eight|nine)\W*)"
@@ -33,11 +33,16 @@ def sum_calibration2(data):
             num += word_to_digit[b[::-1]]
         sum += int(num)
 
-    print(sum)
+    print('Part two:', sum)
+
+
+def main():
+    with open('inputs/day-1.in', 'r') as file:
+        data = file.read().strip().split('\n')
+
+    sum_calibration1(data)
+    sum_calibration2(data)
 
 
 if __name__ == '__main__':
-    with open('inputs/day-1.in', 'r') as file:
-        data = file.read().strip().split('\n')
-    sum_calibration1(data)
-    sum_calibration2(data)
+    main()
