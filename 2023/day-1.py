@@ -1,5 +1,6 @@
 import re
 
+
 # Part one
 def sum_calibration1(data):
     sum = 0
