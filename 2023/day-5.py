@@ -44,6 +44,36 @@ def low_loc(data):
     print('Part one:', min(locations))
 
 
+def cut_interval(start, end, src_start, dest_start, range):
+    # If interval is overlaps than src interval
+    if start < src_start and end >= src_start + range:
+        return (
+            start, src_start-1,
+            dest_start, dest_start+range-1,
+            src_start + range, end
+            )
+    # If interval start is less than src start
+    elif start < src_start and end < src_start + range and end >= src_start:
+        return (
+            start, src_start-1,
+            dest_start, dest_start+range-((src_start+range-1)-end)-1
+        )
+    # If interval end is greater than src end
+    elif start >= src_start and start < src_start+range and end >= src_start+range:
+        print(True)
+        return (
+            src_start+range, end,
+            dest_start+(start-src_start), dest_start+range-1
+        )
+    # If interval within src interval
+    elif start >= src_start and end < src_start+range:
+        return (
+            dest_start+(start-src_start), dest_start+range-((src_start+range-1)-end)-1, 0, 0, 0, 0, 0, 0
+        )
+    else:
+        return (start, end)
+    
+
 def dnc(start, end, mappings, map, entry):
     if map > len(maps)-1:
         return start
@@ -51,40 +81,28 @@ def dnc(start, end, mappings, map, entry):
         if maps[map] == 'humidity-to-location map:':
             return start
         return dnc(start, end, mappings, map+1, 0)
-    else:
-        src = mappings[maps[map]][entry][1]
-        dest = mappings[maps[map]][entry][0]
-        range = mappings[maps[map]][entry][2]
+    
+    src = mappings[maps[map]][entry][1]
+    dest = mappings[maps[map]][entry][0]
+    range = mappings[maps[map]][entry][2]
 
-        # Start and end are beyond the range
-        if start < src and end > src+range-1:
-            return min(
-                dnc(start, src-1, mappings, map, entry+1),
-                dnc(dest, (dest+range)-1, mappings, map+1, 0),
-                dnc(src+range, end, mappings, map, entry+1)
-            )
-        # Start is beyond the range
-        elif start < src and end <= src+range-1:
-            return min(
-                dnc(start, src-1, mappings, map, entry+1),
-                dnc(dest, dest+(range-((src+range-1)-end-1)), mappings, map+1, 0)
-            )
-        # End is beyond the range
-        elif start >= src and end > src+range-1:
-            return min(
-                dnc(src+range, end, mappings, map, entry+1),
-                dnc(dest+(start-src), dest+range-1, mappings, map+1, 0)
-            )
-        # If start and end are within the range
-        elif start >= src and end <= src+range-1:
-            return dnc(
-                dest+(start-src),
-                dest+(range-((src+range-1)-end-1)),
-                mappings, map+1, 0
-                )
-        # If not within the range at all
-        else:
-            return dnc(start, end, mappings, map, entry+1)
+    res = cut_interval(start, end, src, dest, range)
+
+    if len(res) == 2:
+        return dnc(start, end, mappings, map, entry+1)
+    elif len(res) == 4:
+        return min(
+            dnc(res[0], res[1], mappings, map, entry+1),
+            dnc(res[2], res[3], mappings, map+1, 0)
+        )
+    elif len(res) == 6:
+        return min(
+            dnc(res[0], res[1], mappings, map, entry+1),
+            dnc(res[2], res[3], mappings, map+1, 0),
+            dnc(res[4], res[5], mappings, map, entry+1)
+        )
+    else:
+        return dnc(res[0], res[1], mappings, map+1, 0)
 
 
 # Part two
@@ -102,7 +120,7 @@ def eff_low_loc(data):
 
 
 def main():
-    with open('inputs/test.in', 'r') as file:
+    with open('inputs/day-5.in', 'r') as file:
         data = [line for line in file.read().strip().split('\n') if line != '']
     low_loc(data)
     eff_low_loc(data)
