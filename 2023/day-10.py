@@ -62,124 +62,108 @@ def get_furthest_steps(data, start):
 
 
 # Part two
-# def floodfill(data, start, og_seen):
-#     edge = False
-#     seen = set()
-#     q = []
-#     heapq.heappush(q, start)
+def floodfill(data, start, og_seen):
+    q = []
+    seen = set()
+    heapq.heappush(q, start)
 
-#     while len(q) != 0:
-#         n = heapq.heappop(q)
-#         ny, nx = n
-#         if data[ny][nx] in ['.', 'J', '|', 'L', 'F', '7', '-'] and n not in seen and n not in og_seen:
-#             if ny == 0 or ny == len(data)-1 or nx == 0 or nx == len(data[0])-1:
-#                 edge = True
-#             seen.add(n)
+    while len(q) != 0:
+        n = heapq.heappop(q)
+        ny, nx = n
+        if data[ny][nx] in ['.', 'J', '|', 'L', 'F', '7', '-'] and n not in seen and n not in og_seen:
+            seen.add(n)
 
-#             if ny > 0:
-#                 heapq.heappush(q, (ny-1,nx))
-#             if ny < len(data)-1:
-#                 heapq.heappush(q, (ny+1,nx))
-#             if nx > 0:
-#                 heapq.heappush(q, (ny,nx-1))
-#             if nx < len(data[0])-1:
-#                 heapq.heappush(q, (ny,nx+1))
+            if ny > 0:
+                heapq.heappush(q, (ny-1,nx))
+            if ny < len(data)-1:
+                heapq.heappush(q, (ny+1,nx))
+            if nx > 0:
+                heapq.heappush(q, (ny,nx-1))
+            if nx < len(data[0])-1:
+                heapq.heappush(q, (ny,nx+1))
 
-#     return seen, edge
-
-
-# def get_enclosed_count(data, loop_count, seen):
-#     not_enclosed = 0
-
-#     for y in range(len(data)):
-#         for x in range(len(data[y])):
-#             if (y,x) not in seen:
-#                 if data[y][x] in ['.', 'J', '|', 'L', 'F', '7', '-']:
-#                     new_seen, edge = floodfill(data, (y,x), seen)
-#                     if edge:
-#                         not_enclosed += len(new_seen)
-#                     seen = seen.union(new_seen)
-#                 elif y == 0 or y == len(data)-1 or x == 0 or x == len(data[0])-1:
-#                     not_enclosed += 1
-
-#     final = (len(data) * len(data[0])) - (loop_count * 2) - not_enclosed
-#     print('Part two:', final)
+    return seen
 
 
 def get_enclosed_count(data, start, loop_seen):
     enclosed = set()
-    seen = set()
     dir = None
-    orient = None
     cur = None
 
-    new_dir = {
+    next_dir = {
         'up': {'|': 'up', '7': 'left', 'F': 'right'},
         'down': {'|': 'down', 'J': 'left', 'L': 'right'},
         'left': {'-': 'left', 'L': 'up', 'F': 'down'},
         'right': {'-': 'right', 'J': 'up', '7': 'down'}
     }
 
-    new_orient = {
-        'up': 0, 'right': 1, ''
+    sy, sx = start
+    n, e, s, w = False, False, False, False
+    if sy > 0 and data[sy-1][sx] in ['|', 'F', '7']:
+        n = True
+    if sy < len(data)-1 and data[sy+1][sx] in ['|', 'L', 'J']:
+        s = True
+    if sx > 0 and data[sy][sx-1] in ['-', 'L', 'F']:
+        w = True
+    if sx < len(data[0])-1 and data[sy][sx+1] in ['-', 'J', '7']:
+        e = True
+
+    starting = {
+        (True, False, False, True): ('up', (sy-1,sx)),
+        (False, True, False, True): ('right', (sy,sx+1)),
+        (False, False, True, True): ('down', (sy+1,sx)),
+        (False, True, True, False): ('right', (sy,sx+1)),
+        (True, False, True, False): ('up', (sy-1,sx)),
+        (True, True, False, False): ('right', (sy,sx+1))
     }
 
-
-    sy, sx = start
-    if sy > 0 and data[sy-1][sx] in ['|', 'F', '7']:
-        cur = (sy-1, sx)
-        dir = 'up'
-        orient = 0
-    elif sy < len(data)-1 and data[sy+1][sx] in ['|', 'L', 'J']:
-        cur = (sy+1, sx)
-        dir = 'down'
-        orient = 0
-    elif sx > 0 and data[sy][sx-1] in ['-', 'L', 'F']:
-        cur = (sy, sx-1)
-        dir = 'left'
-        orient = 1
-    elif sx < len(data[0])-1 and data[sy][sx+1] in ['-', 'J', '7']:
-        cur = (sy, sx+1)
-        dir = 'right'
-        orient = 1
+    dir, cur = starting[(n,e,s,w)]
 
     while True:
         y, x = cur
-        seen.add(cur)
+        p_cur = data[y][x]
+        dir = next_dir[dir][p_cur]
 
         if dir == 'up':
             cur = (y-1,x)
+            if x < len(data)-1 and (y,x+1) not in loop_seen:
+                enclosed.add((y,x+1))
         elif dir == 'down':
             cur = (y+1,x)
+            if x > 0 and (y,x-1) not in loop_seen:
+                enclosed.add((y,x-1))
         elif dir == 'left':
             cur = (y,x-1)
-        else:
+            if y > 0 and (y-1,x) not in loop_seen:
+                enclosed.add((y-1,x))
+        elif dir == 'right':
             cur = (y,x+1)
-        
+            if y < len(data[0])-1 and (y+1,x) not in loop_seen:
+                enclosed.add((y+1,x))
+
         ny,nx = cur
 
         if (ny,nx) == start:
             break
 
-        p_next = data[ny][nx]
-        old_dir = dir
-        dir = new_dir[old_dir][p_next]
-        
+    flood_seen = set()
+    for item in enclosed:
+        if item not in flood_seen:
+            flooded = floodfill(data, item, loop_seen)
+            flood_seen = flood_seen.union(flooded)
 
-
-
-    print()
+    print('Part two:', len(flood_seen))
 
 
 def main():
-    with open('inputs/test.in', 'r') as file:
+    with open('inputs/day-10.in', 'r') as file:
         data = file.read().strip().split('\n')
         data = [[_ for _ in _] for _ in data]
         sy, sx = list(zip(*np.where(np.array([[_ for _ in _] for _ in data]) == 'S')))[0]
 
     steps, seen = get_furthest_steps(data, (sy, sx))
     print('Part one:', steps)
-    get_enclosed_count(data, steps, seen)
+    get_enclosed_count(data, (sy, sx), seen)
 
 
 if __name__ == '__main__':
