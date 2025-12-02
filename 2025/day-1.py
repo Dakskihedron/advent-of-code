@@ -32,7 +32,7 @@ def total_times_dial_clicks_zero(data):
 
 def main():
     with open('inputs/day-1.in', 'r') as file:
-        data = file.read().strip().split('\n');
+        data = file.read().strip().split('\n')
         data = [-int(_[1:]) if _[0] == 'L' else int(_[1:]) for _ in data]
 
     total_times_dial_at_zero(data)
